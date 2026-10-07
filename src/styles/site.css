@@ -1,0 +1,346 @@
+:root {
+  --bg: #faf8f4;
+  --surface: #ffffff;
+  --text: #1f2421;
+  --muted: #5b625e;
+  --border: #ddd8cf;
+  --accent: #2f6f5e;
+  --accent-ink: #ffffff;
+  --accent-soft: #e3efea;
+  --warn-soft: #fbeee0;
+  --warn-border: #e2b98a;
+  --radius: 12px;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #151918;
+    --surface: #1e2422;
+    --text: #eceeed;
+    --muted: #a7afab;
+    --border: #343c39;
+    --accent: #7cc4ad;
+    --accent-ink: #0f1412;
+    --accent-soft: #1f3530;
+    --warn-soft: #33281c;
+    --warn-border: #7a5a36;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 118.75%; /* 19px: easy to read on a phone */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 0.15em;
+}
+
+a[href^='tel:'] {
+  white-space: nowrap;
+}
+
+.wrap {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Header */
+
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 0;
+}
+
+.site-header .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+.site-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* On phones the menu is one row of equal-width buttons. */
+.site-header nav {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  width: 100%;
+}
+
+.site-header nav a {
+  text-align: center;
+  padding: 0.45rem 0;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+@media (min-width: 40rem) {
+  .site-header nav {
+    display: flex;
+    gap: 0.25rem;
+    width: auto;
+  }
+
+  .site-header nav a {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+.site-header nav a[aria-current='page'] {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Main content */
+
+main {
+  padding-top: 1.25rem;
+  padding-bottom: 2.5rem;
+}
+
+h1 {
+  font-size: 1.75rem;
+  line-height: 1.2;
+  margin: 0.5rem 0 1rem;
+}
+
+.prose h2 {
+  font-size: 1.25rem;
+  margin: 2rem 0 0.5rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid var(--accent-soft);
+}
+
+.prose h3 {
+  font-size: 1.05rem;
+  margin: 1.5rem 0 0.25rem;
+}
+
+.prose li + li {
+  margin-top: 0.35rem;
+}
+
+.prose ol,
+.prose ul {
+  padding-left: 1.4rem;
+}
+
+.prose img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+
+.prose blockquote {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  background: var(--warn-soft);
+  border-left: 4px solid var(--warn-border);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.prose blockquote > :first-child {
+  margin-top: 0;
+}
+
+.prose blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.prose table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+}
+
+.back {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Checklists: "- [ ] Do this" in Markdown */
+
+.prose ul:has(> li > input[type='checkbox']) {
+  list-style: none;
+  padding-left: 0;
+}
+
+.prose li:has(> input[type='checkbox']) {
+  position: relative;
+  padding: 0.6rem 0.75rem 0.6rem 2.75rem;
+  margin: 0.5rem 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.prose li > input[type='checkbox'] {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.8rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.prose li.tickable {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.prose li.done {
+  color: var(--muted);
+  text-decoration: line-through;
+  background: transparent;
+}
+
+.reset-ticks {
+  margin-top: 1.5rem;
+  font: inherit;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+/* YouTube videos: a YouTube link on its own line in Markdown */
+
+.video {
+  margin: 1.25rem 0;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #000;
+}
+
+.video iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* Big buttons on the home and problems pages */
+
+.cards {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.cards a {
+  display: block;
+  padding: 1rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 6px solid var(--accent);
+  border-radius: var(--radius);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.cards a:hover,
+.cards a:focus-visible {
+  background: var(--accent-soft);
+}
+
+.cards strong {
+  display: block;
+  font-size: 1.15rem;
+  color: var(--accent);
+}
+
+.cards span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* Footer */
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 1.25rem 0 2rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* Printing: a clean copy to leave in the house */
+
+@media print {
+  html {
+    font-size: 12pt;
+  }
+
+  .site-header nav,
+  .site-footer,
+  .reset-ticks,
+  .back,
+  .video {
+    display: none;
+  }
+
+  .site-header {
+    border: 0;
+    padding: 0;
+  }
+
+  .prose li:has(> input[type='checkbox']) {
+    padding: 0.2rem 0 0.2rem 2rem;
+    margin: 0;
+    border: 0;
+  }
+
+  .prose li > input[type='checkbox'] {
+    left: 0;
+    top: 0.3rem;
+  }
+
+  .prose li.done {
+    text-decoration: none;
+    color: inherit;
+  }
+}

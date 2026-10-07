@@ -1,0 +1,27 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const intro = await getEntry('pages', 'problems');
+if (!intro) throw new Error('Missing src/content/pages/problems.md');
+const { Content } = await render(intro);
+
+const problems = (await getCollection('problems'))
+  .sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title));
+---
+
+<Base title={intro.data.title} description={intro.data.description}>
+  <h1>{intro.data.title}</h1>
+  <div class="prose">
+    <Content />
+  </div>
+  <ul class="cards">
+    {problems.map((problem) => (
+      <li>
+        <a href={`/problems/${problem.id}/`}>
+          <strong>{problem.data.title}</strong>
+        </a>
+      </li>
+    ))}
+  </ul>
+</Base>

@@ -1,0 +1,20 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+// Home and Problems have their own pages (index.astro, problems/index.astro).
+export async function getStaticPaths() {
+  const pages = await getCollection('pages', (page) => !['home', 'problems'].includes(page.id));
+  return pages.map((page) => ({ params: { page: page.id }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+
+<Base title={page.data.title} description={page.data.description}>
+  <h1>{page.data.title}</h1>
+  <div class="prose">
+    <Content />
+  </div>
+</Base>
